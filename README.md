@@ -4,13 +4,9 @@
 
 **Professor:** [Rodrigo Rebouças de Almeida](http://rodrigor.dcx.ufpb.br)
 
-# Strategy: Implementar nova estratégia de movimento
+# Jogo de Tabuleiro
 
-Estude o código existente e implemente uma nova estratégia de movimentação da peça do jogo de damas.
+O objetivo deste projeto é exercitar a programação Orientada a Objetos com Java,
+e alguns padrões de projeto.
 
-Implemente a regra de movimentação `RegraDamasMovimentoDama`.
-A dama pode mover-se para trás e para frente em diagonal uma casa de cada vez, diferente das outras peças, que movimentam-se apenas para frente em diagonal. A dama pode também tomar outra peça pela frente ou por trás em diagonal e lateral
-
-Não se preocupe em implementar a regra de movimentação completa, mas crie a estrutura do código para receber a estratégia diferente de movimentação.
-
-Implemente testes para a nova estratégia de movimentação.
+Sinta-se à vontade para contribuir.

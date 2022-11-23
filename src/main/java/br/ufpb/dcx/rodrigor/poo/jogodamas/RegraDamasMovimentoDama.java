@@ -26,6 +26,11 @@ public class RegraDamasMovimentoDama implements RegraMovimentacao {
 
     }
 
+    @Override
+    public String getID() {
+        return "regraDama";
+    }
+
     boolean valido(Posicao origem, Posicao destino, Tabuleiro tabuleiro, Posicao direcao){
         if(origem.equals(destino)) return true;
         Optional<CasaTabuleiro> casaDestino = tabuleiro.getCasa(origem.lin, origem.col);

@@ -213,6 +213,111 @@ class RegraDamasMovimentoSimplesTest {
 
     }
 
+    @Test
+    void pecaPretaTOPSimplesVirandoDamaMovimentoSimples() {
 
+        //Testando movimento de peça preta, descendo no tabuleiro e virando Dama.
+
+        PecaTabuleiro peca = new PecaTabuleiro(Cor.PRETO, regraSimoples, PosicaoInicio.TOP);
+        tabuleiro.alocarPeca(6, 2, peca);
+        //    0   1   2   3   4   5   6   7
+        //  ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        //0 │███│   │███│   │███│   │███│   │
+        //1 │   │███│   │███│   │███│   │███│
+        //2 │███│   │███│   │███│   │███│   │
+        //3 │   │███│   │███│   │███│   │███│
+        //4 │███│   │███│   │███│   │███│   │
+        //5 │   │███│   │███│   │███│   │███│
+        //6 │███│   │█●█│   │███│   │███│   │
+        //7 │   │███│   │███│   │███│   │███│
+        //  └───┴───┴───┴───┴───┴───┴───┴───┘
+
+        assertTrue(peca.getRegra() instanceof RegraDamasMovimentoSimples);
+        assertDoesNotThrow(() -> tabuleiro.mover(new Posicao(6,2),new Posicao(7,1)));
+        assertEquals(peca,tabuleiro.getPeca(7,1).get());
+        assertFalse(tabuleiro.getPeca(7,1).get().getRegra() instanceof RegraDamasMovimentoSimples, "deve mudar a regra quando chegar na última linha");
+        assertTrue(tabuleiro.getPeca(7,1).get().getRegra() instanceof RegraDamasMovimentoDama, "a regra deve mudar para RegraDamasMovimentoDama");
+
+    }
+
+    @Test
+    void pecaPretaTOPSimplesVirandoDamaMovimentoCaptura() {
+
+        //Testando movimento de peça preta, descendo no tabuleiro e virando Dama.
+
+        PecaTabuleiro peca = new PecaTabuleiro(Cor.PRETO, regraSimoples, PosicaoInicio.TOP);
+        tabuleiro.alocarPeca(5, 3, peca);
+        tabuleiro.alocarPeca(6,2,new PecaTabuleiro(Cor.BRANCO,regraSimoples,PosicaoInicio.BOTTOM));
+        System.out.println(tabuleiro);
+        //    0   1   2   3   4   5   6   7
+        //  ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        //0 │███│   │███│   │███│   │███│   │
+        //1 │   │███│   │███│   │███│   │███│
+        //2 │███│   │███│   │███│   │███│   │
+        //3 │   │███│   │███│   │███│   │███│
+        //4 │███│   │███│   │███│   │███│   │
+        //5 │   │███│   │█●█│   │███│   │███│
+        //6 │███│   │█◯█│   │███│   │███│   │
+        //7 │   │███│   │███│   │███│   │███│
+        //  └───┴───┴───┴───┴───┴───┴───┴───┘
+
+        assertTrue(peca.getRegra() instanceof RegraDamasMovimentoSimples);
+        assertDoesNotThrow(() -> tabuleiro.mover(new Posicao(5,3),new Posicao(7,1)));
+        assertEquals(peca,tabuleiro.getPeca(7,1).get());
+        assertTrue(tabuleiro.getPeca(6,2).isEmpty()); // capturou a peça, então ela não existe mais
+        assertTrue(tabuleiro.getPeca(7,1).get().getRegra() instanceof RegraDamasMovimentoDama, "a regra deve mudar para RegraDamasMovimentoDama");
+
+    }
+
+    @Test
+    void pecaBrancaBOTTOMSimplesVirandoDamaMovimentoSimples() {
+
+        PecaTabuleiro peca = new PecaTabuleiro(Cor.BRANCO, regraSimoples, PosicaoInicio.BOTTOM);
+        tabuleiro.alocarPeca(1, 3, peca);
+        //    0   1   2   3   4   5   6   7
+        //  ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        //0 │███│   │███│   │███│   │███│   │
+        //1 │   │███│   │█◯█│   │███│   │███│
+        //2 │███│   │███│   │███│   │███│   │
+        //3 │   │███│   │███│   │███│   │███│
+        //4 │███│   │███│   │███│   │███│   │
+        //5 │   │███│   │███│   │███│   │███│
+        //6 │███│   │███│   │███│   │███│   │
+        //7 │   │███│   │███│   │███│   │███│
+        //  └───┴───┴───┴───┴───┴───┴───┴───┘
+
+        assertTrue(peca.getRegra() instanceof RegraDamasMovimentoSimples);
+        assertDoesNotThrow(() -> tabuleiro.mover(new Posicao(1,3),new Posicao(0,2)));
+        assertEquals(peca,tabuleiro.getPeca(0,2).get());
+        assertTrue(peca.getRegra() instanceof RegraDamasMovimentoDama, "a regra deve mudar para RegraDamasMovimentoDama");
+
+    }
+
+    @Test
+    void pecaBrancaBOTTOMSimplesVirandoDamaMovimentoCaptura() {
+
+        PecaTabuleiro peca = new PecaTabuleiro(Cor.BRANCO, regraSimoples, PosicaoInicio.BOTTOM);
+        tabuleiro.alocarPeca(2, 2, peca);
+        tabuleiro.alocarPeca(1,3,new PecaTabuleiro(Cor.PRETO,regraSimoples,PosicaoInicio.TOP));
+        System.out.println(tabuleiro);
+        //    0   1   2   3   4   5   6   7
+        //  ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        //0 │███│   │███│   │███│   │███│   │
+        //1 │   │███│   │█●█│   │███│   │███│
+        //2 │███│   │█◯█│   │███│   │███│   │
+        //3 │   │███│   │███│   │███│   │███│
+        //4 │███│   │███│   │███│   │███│   │
+        //5 │   │███│   │███│   │███│   │███│
+        //6 │███│   │███│   │███│   │███│   │
+        //7 │   │███│   │███│   │███│   │███│
+        //  └───┴───┴───┴───┴───┴───┴───┴───┘
+
+        assertTrue(peca.getRegra() instanceof RegraDamasMovimentoSimples);
+        assertDoesNotThrow(() -> tabuleiro.mover(new Posicao(2,2),new Posicao(0,4)));
+        assertEquals(peca,tabuleiro.getPeca(0,4).get());
+        assertTrue(tabuleiro.getPeca(1,3).isEmpty()); // capturou a peça, então ela não existe mais
+        assertTrue(peca.getRegra() instanceof RegraDamasMovimentoDama, "a regra deve mudar para RegraDamasMovimentoDama");
+
+    }
 
 }

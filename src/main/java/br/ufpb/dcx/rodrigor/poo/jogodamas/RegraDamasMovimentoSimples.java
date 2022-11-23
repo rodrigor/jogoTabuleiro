@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class RegraDamasMovimentoSimples implements RegraMovimentacao {
 
-    private String regraID = "movimentacaoSimples";
     @Override
     public boolean movimentoValido(Posicao origem, Posicao destino, Tabuleiro tabuleiro) throws MovimentoInvalidoException {
         PecaTabuleiro pecaOrigem = tabuleiro.getCasa(origem).get().getPeca();
@@ -36,6 +35,7 @@ public class RegraDamasMovimentoSimples implements RegraMovimentacao {
             Posicao vizinho = new Posicao(origem.lin+dir.lin,origem.col+dir.col);
             if(destino.equals(vizinho)){
                 tabuleiro.movimentarPeca(origem, destino);
+                checarViraDama(destino, pecaOrigem);
                 return true;
             }
         }
@@ -49,11 +49,26 @@ public class RegraDamasMovimentoSimples implements RegraMovimentacao {
                             destino.col == vizinho.col + dir.col)){
                 tabuleiro.removerPeca(vizinho); //todo: retornar peça capturada
                 tabuleiro.movimentarPeca(origem,destino);
+                checarViraDama(destino, pecaOrigem);
                 return true;
             }
         }
 
         throw new MovimentoInvalidoException("Movimento inválido");
+    }
+
+    @Override
+    public String getID() {
+        return "DamasMovimentacaoSimples";
+    }
+
+    private static void checarViraDama(Posicao destino, PecaTabuleiro pecaOrigem) {
+        int ULTIMA_LINHA_BOTTOM = 7;
+        int ULTIMA_LINHA_TOP = 0;
+        if(( pecaOrigem.getPosicaoInicio().equals(PosicaoInicio.TOP) & (destino.lin == ULTIMA_LINHA_BOTTOM) ) ||
+                ( pecaOrigem.getPosicaoInicio().equals(PosicaoInicio.BOTTOM) & (destino.lin == ULTIMA_LINHA_TOP) )) {
+            pecaOrigem.setRegra(new RegraDamasMovimentoDama());
+        }
     }
 
 
@@ -63,11 +78,11 @@ public class RegraDamasMovimentoSimples implements RegraMovimentacao {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RegraDamasMovimentoSimples that = (RegraDamasMovimentoSimples) o;
-        return Objects.equals(regraID, that.regraID);
+        return getID().equals(that.getID());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(regraID);
+        return Objects.hash(getID());
     }
 }

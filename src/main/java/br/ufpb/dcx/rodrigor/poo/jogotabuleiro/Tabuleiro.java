@@ -41,6 +41,15 @@ public class Tabuleiro {
         return this.getCasa(posicao.lin,posicao.col);
     }
 
+    public Optional<PecaTabuleiro> getPeca(int lin, int col){
+        return getPeca(new Posicao(lin,col));
+    }
+
+    public Optional<PecaTabuleiro> getPeca(Posicao posicao){
+        return Optional.ofNullable(this.getCasa(posicao).get().getPeca());
+    }
+
+
     public void mover(Posicao origem, Posicao destino) throws MovimentoInvalidoException {
         // Início das verificações dos parâmetros do método
         if(origem == null){
@@ -120,13 +129,13 @@ public class Tabuleiro {
 
         tabtxt.append(topBorder);
         for (int y = 0; y < tabuleiro.length; y++) {
-            tabtxt.append(y+" ");
+            tabtxt.append(y).append(" ");
             for (int x = 0; x < tabuleiro.length; x++) {
                 nextX = x+1 < tabuleiro.length;
 
                 CasaTabuleiro casa = tabuleiro[y][x];
                 String cortxt = casa.temPeca()?casa.getCor().equals(Cor.PRETO)?"█"+casa.getPeca()+"█":" "+casa.getPeca()+" ":casa.getCor().equals(Cor.PRETO)?"███":"   ";
-                tabtxt.append("│"+cortxt+(nextX?"":"│\n"));
+                tabtxt.append("│").append(cortxt).append(nextX?"":"│\n");
             }
         }
         tabtxt.append(bottonBorder);

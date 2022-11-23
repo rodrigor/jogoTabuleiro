@@ -30,6 +30,8 @@ public class RegraDamasMovimentoSimples implements RegraMovimentacao {
                 new Posicao(+1,-1)
         };
 
+
+
         // Verificar casas vizinhas
         for(Posicao dir:direcoes){
             Posicao vizinho = new Posicao(origem.lin+dir.lin,origem.col+dir.col);
@@ -41,6 +43,7 @@ public class RegraDamasMovimentoSimples implements RegraMovimentacao {
         }
 
         // capturar peça
+        // todo: permitir capturar várias peças em sequencia.
         for(Posicao dir: direcoes){
             Posicao vizinho = new Posicao(origem.lin + dir.lin, origem.col + dir.col);
             if(tabuleiro.getCasa(vizinho).isPresent() &&

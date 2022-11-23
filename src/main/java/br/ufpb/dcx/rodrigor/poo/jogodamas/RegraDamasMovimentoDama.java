@@ -8,7 +8,8 @@ public class RegraDamasMovimentoDama implements RegraMovimentacao {
 
     @Override
     public boolean movimentoValido(Posicao origem, Posicao destino, Tabuleiro tabuleiro) throws MovimentoInvalidoException {
-
+        //todo: Falta implementar a captura de peças pela Dama
+        // todo: Não é possível "atravessar" peças da mesma cor, apenas capturar peças do adversário.
         Posicao[] direcoes = {
                 new Posicao(-1,-1),
                 new Posicao(-1,+1),

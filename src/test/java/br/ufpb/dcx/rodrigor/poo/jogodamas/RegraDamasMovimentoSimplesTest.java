@@ -14,13 +14,6 @@ class RegraDamasMovimentoSimplesTest {
     Tabuleiro tabuleiro;
 
 
-    public static void main(String[] args) {
-
-        JogoDamas jogo = new JogoDamas();
-        System.out.println(jogo.getTabuleiro().toString());
-
-    }
-
     PecaTabuleiro peca;
     @BeforeEach
     void setUp() {
@@ -29,6 +22,41 @@ class RegraDamasMovimentoSimplesTest {
         peca = new PecaTabuleiro(Cor.PRETO,regraSimoples,PosicaoInicio.TOP);
         tabuleiro = jogo.getTabuleiro();
     }
+
+
+    @Test
+    void movimentoInvalidoPecasVizinhas(){
+        PecaTabuleiro peca = new PecaTabuleiro(Cor.BRANCO,regraSimoples,PosicaoInicio.BOTTOM);
+        tabuleiro.getCasa(3,3).get().setPeca(peca);
+        tabuleiro.getCasa(4,2).get().setPeca(new PecaTabuleiro(Cor.PRETO,regraSimoples,PosicaoInicio.TOP));
+        tabuleiro.getCasa(4,4).get().setPeca(new PecaTabuleiro(Cor.PRETO,regraSimoples,PosicaoInicio.TOP));
+        tabuleiro.getCasa(2,2).get().setPeca(new PecaTabuleiro(Cor.PRETO,regraSimoples,PosicaoInicio.TOP));
+        tabuleiro.getCasa(2,4).get().setPeca(new PecaTabuleiro(Cor.PRETO,regraSimoples,PosicaoInicio.TOP));
+
+        //    0   1   2   3   4   5   6   7
+        //  ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        //0 │███│   │███│   │███│   │███│   │
+        //1 │   │███│   │███│   │███│   │███│
+        //2 │███│   │█●█│   │█●█│   │███│   │
+        //3 │   │███│   │█◯█│   │███│   │███│
+        //4 │███│   │█●█│   │█●█│   │███│   │
+        //5 │   │███│   │███│   │███│   │███│
+        //6 │███│   │███│   │███│   │███│   │
+        //7 │   │███│   │███│   │███│   │███│
+        //  └───┴───┴───┴───┴───┴───┴───┴───┘
+
+        assertThrows(MovimentoInvalidoException.class,() -> tabuleiro.mover(new Posicao(3,3), new Posicao(2,2)));
+        assertEquals(peca,tabuleiro.getCasa(3,3).get().getPeca());
+        assertThrows(MovimentoInvalidoException.class,() -> tabuleiro.mover(new Posicao(3,3), new Posicao(2,4)));
+        assertEquals(peca,tabuleiro.getCasa(3,3).get().getPeca());
+        assertThrows(MovimentoInvalidoException.class,() -> tabuleiro.mover(new Posicao(3,3), new Posicao(4,2)));
+        assertEquals(peca,tabuleiro.getCasa(3,3).get().getPeca());
+        assertThrows(MovimentoInvalidoException.class,() -> tabuleiro.mover(new Posicao(3,3), new Posicao(4,4)));
+        assertEquals(peca,tabuleiro.getCasa(3,3).get().getPeca());
+
+
+    }
+
 
     @Test
     void movimentoSimplesPecaBrancaSubindo() {
@@ -135,11 +163,7 @@ class RegraDamasMovimentoSimplesTest {
         assertEquals(peca,tabuleiro.getCasa(5,5).get().getPeca());
         assertFalse(tabuleiro.getCasa(4,4).get().temPeca(),"A peça não foi capturada"); // a peça foi capturada
 
-
-
-
-
-        System.out.println(tabuleiro);
+        //System.out.println(tabuleiro);
 
     }
 
@@ -186,10 +210,6 @@ class RegraDamasMovimentoSimplesTest {
         assertEquals(peca,tabuleiro.getCasa(1,5).get().getPeca());
         assertFalse(tabuleiro.getCasa(2,4).get().temPeca(),"A peça não foi capturada"); // a peça foi capturada
 
-
-
-
-        System.out.println(tabuleiro);
 
     }
 

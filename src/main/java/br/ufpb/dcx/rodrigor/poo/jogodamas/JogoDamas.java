@@ -20,7 +20,8 @@ public class JogoDamas {
     public void fazerSetup(){
         RegraMovimentacao regraDamas = new RegraDamasMovimentoSimples();
 
-        tabuleiro.getCasa(0,0).get().setPeca(new PecaTabuleiro(Cor.PRETO,regraDamas, TOP));
+        //todo: refatorar
+        tabuleiro.alocarPeca(0, 0, new PecaTabuleiro(Cor.PRETO,regraDamas, TOP));
         tabuleiro.getCasa(0,2).get().setPeca(new PecaTabuleiro(Cor.PRETO,regraDamas, TOP));
         tabuleiro.getCasa(0,4).get().setPeca(new PecaTabuleiro(Cor.PRETO,regraDamas, TOP));
         tabuleiro.getCasa(0,6).get().setPeca(new PecaTabuleiro(Cor.PRETO,regraDamas, TOP));

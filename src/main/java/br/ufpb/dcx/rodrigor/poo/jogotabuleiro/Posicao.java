@@ -2,7 +2,7 @@ package br.ufpb.dcx.rodrigor.poo.jogotabuleiro;
 
 import java.util.Objects;
 
-public class Posicao {
+public class Posicao{
 
     public int col;
     public int lin;

@@ -67,15 +67,32 @@ public class Tabuleiro {
 
         PecaTabuleiro pecaOrigem= this.getCasa(origem).get().getPeca();
 
-        if (this.getCasa(destino).get().temPeca()){
-            throw new MovimentoInvalidoException("Movimento inválido");
-        }
         // Fim das verificações dos parâmetros do método
 
 
         pecaOrigem.movimentoValido(origem,destino,this);
     }
 
+    public void movimentarPeca(Posicao origem, Posicao destino){
+        PecaTabuleiro pecaOrigem = getCasa(origem).get().getPeca();
+        getCasa(destino).get().setPeca(pecaOrigem);
+        getCasa(origem).get().removerPeca();
+
+    }
+
+    public Optional<PecaTabuleiro> removerPeca(Posicao posicao){
+        return getCasa(posicao).get().removerPeca();
+    }
+
+
+    public Optional<PecaTabuleiro> alocarPeca(int lin, int col, PecaTabuleiro peca){
+        return this.alocarPeca(new Posicao(lin,col), peca);
+    }
+
+    public Optional<PecaTabuleiro> alocarPeca(Posicao posicao, PecaTabuleiro peca){
+        this.getCasa(posicao).get().setPeca(peca);
+        return Optional.of(peca);
+    }
 
 
 
@@ -119,8 +136,4 @@ public class Tabuleiro {
 
 
 
-    public static void main(String[] args) {
-        Tabuleiro t = new Tabuleiro();
-        System.out.println(t);
-    }
 }
